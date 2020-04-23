@@ -50,32 +50,39 @@ class SearchBar extends Component {
   listUSers = () => {
     const { data } = this.state;
     return data.map((user, index) => {
-      return <li key={index}><a href={user.html_url}>{user.login}</a></li>
+      return(
+        <li key={index}>
+          <a href={user.html_url}>{user.login}</a>
+        </li>
+      ) 
     })
   }
 
+
+  printSearchBar = () => {
+    const {value} = this.state;
+    return (
+      <div className='Container'>
+        <input className='SearchInput' type='text' value={value} onChange={this.handleInput} />
+        <button className='SearchButton' onClick={this.searchGitHub}>SEARCH</button>
+      </div>
+    )
+  }
+
   render(){
-    const {value, status} = this.state; 
+    const {status} = this.state; 
     switch(status){
       case  STATUS.STANDBY:
         console.log(status)
         return(
-          <div className='Container'>
-            <input className='SearchInput' type='text' value={value} onChange={this.handleInput} />
-            <button className='SearchButton' onClick={this.searchGitHub}>SEARCH</button>
-                  <div>
-                    <ul>
-                      {this.listUSers()}
-                    </ul>
-                  </div>
-    
+          <div>
+            {this.printSearchBar()}
           </div>
         )
       case STATUS.LOADING:
         return (
-        <div className='Container'>
-          <input className='SearchInput' type='text' value={value} onChange={this.handleInput} />
-          <button className='SearchButton' onClick={this.searchGitHub}>SEARCH</button>
+        <div>
+            {this.printSearchBar()}
           <div>
               LOADING
             <div class="loader"></div>
@@ -85,9 +92,8 @@ class SearchBar extends Component {
         )
       case STATUS.LOADED:
         return (
-        <div className='Container'>
-          <input className='SearchInput' type='text' value={value} onChange={this.handleInput} />
-          <button className='SearchButton' onClick={this.searchGitHub}>SEARCH</button>
+        <div>
+            {this.printSearchBar()}
           <div>
             <ul>
               {this.listUSers()}
